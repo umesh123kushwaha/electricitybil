@@ -47,7 +47,7 @@
         </div>
          <div class="card-tools">
 
-         <a href="{{url('admins/customer-bills/new-bill')}}"class="btn btn-primary  ml-0 mr-auto">Create New Bill</a>
+         <a href="#" data-toggle="modal" id="addnewbill" data-target="#exampleModal" urldata="{{url('admins/customer-bills/new-bill')}}"class="btn btn-primary  ml-0 mr-auto">Create New Bill</a>
 
          </div>
          
@@ -80,7 +80,7 @@
                         <td>{{$bill->total_amount}}</td>
                         <td>{{$bill->month_name}}</td>
                         <td> 
-                          <a href="{{url('admins/customer-bill/edit-bill')}}/{{$bill->id}}" class="btn btn-success"><i class="fas fa-edit"> Edit</i></a>
+                          <a href="#" data-toggle="modal"  data-target="#exampleModal" urldata="{{url('admins/customer-bill/edit-bill')}}/{{$bill->id}}"  class="btn btn-success editbill"><i class="fas fa-edit"> Edit</i></a>
                           <a href="{{url('admins/customer-bills/delete-bill')}}/{{$bill->id}}" class="btn btn-danger"><i class="fas fa-trash"> Delete</i></a>
                         </td>
 
@@ -103,4 +103,70 @@
   <!-- /.content-wrapper -->
 
 
+@endsection
+@section('script')
+<script>
+  $(document).ready(function(){
+    $('#addnewbill').click(function(){
+      x=$(this).attr('urldata')
+      $.ajax({
+        url:x,
+        success:function(data){
+          $('.modal-content').html(data);
+        }
+      })
+    
+    });
+    $('.editbill').click(function(){
+      x=$(this).attr('urldata')
+     
+      $.ajax({
+        url:x,
+        success:function(data){
+          $('.modal-content').html(data);
+        }
+      })
+    
+    });
+    $(document).on('click','#submit',function(){
+     
+         
+        var form = $('#model-form');
+       
+        var url = form.attr('action');
+       $('#model-form .is-invalid').removeClass('is-invalid');
+        $('#model-form .invalid-feedback').remove();
+
+        $.ajax({
+              type: "POST",
+              url: url,
+              data: form.serialize(), // serializes the form's elements.
+              success: function(data)
+              {
+                 $('#exampleModal').fadeOut();
+                 window.location.href="{{url('admins/customer-bill')}}"
+              },
+              error: function(data)
+              {
+                var errors=data.responseJSON.errors
+                
+                for( var x in errors){
+                  
+                  $('#'+x).addClass('is-invalid');
+                  sp="<span class='invalid-feedback'>"+errors[x]+"</span>"
+                  $('#'+x).after(sp);
+                }
+              }
+            });
+
+
+        });
+        
+      
+   
+  })
+  
+
+ 
+</script>
 @endsection

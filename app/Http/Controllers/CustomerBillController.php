@@ -43,7 +43,7 @@ class CustomerBillController extends Controller
         if($request->post('id')>0){
             $msg="Bill Updated Successfully";
 
-            $model= CustomerBill::find($id);
+            $model= CustomerBill::find($request->post('id'));
         }
         else
         {

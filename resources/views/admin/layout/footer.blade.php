@@ -23,6 +23,7 @@
 <!-- AdminLTE for demo purposes -->
 
 <!-- Page specific script -->
+@yield('script')
 
 </body>
 </html>

@@ -54,10 +54,41 @@
             </div>
       
       </div>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Open modal for @mdo</button>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@fat">Open modal for @fat</button>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">Open modal for @getbootstrap</button>
+
+
     </section>
        <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
 
+
+@endsection
+@section('script')
+<script>
+ $(document).ready(function() {
+    $("#model-submit-btn").click(function() {
+        // var x = JSON.stringify($("#model-form").serializeArray());
+        var x = $("#model-form").serializeArray();
+        var obj={}
+        $.each(x, function(i, field) {
+          if(i==0){
+            obj=obj+field.name + ":"
+                    + field.value;
+          }
+          else{
+            obj=obj+","+field.name + ":"
+                    + field.value;
+          }
+          
+                    
+        });
+        alert(JSON.stringify(x))
+    });
+   
+});
+</script>
 
 @endsection

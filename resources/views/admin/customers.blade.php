@@ -35,7 +35,7 @@
         </div>
          <div class="card-tools">
 
-         <a href="{{url('admins/customers/manage_customer/')}}"class="btn btn-primary  ml-0 mr-auto">Add New Customer</a>
+         <a href="#" data-toggle="modal"  id="newCustomer" data-target="#exampleModal" urldata="{{url('admins/customers/manage_customer/')}}"class="btn btn-primary  ml-0 mr-auto">Add New Customer</a>
 
          </div>
          
@@ -64,7 +64,7 @@
                             <td>{{$customer->customer_city}}</td>
                             <td>{{$customer->customer_mobno}}</td>
                             <td>
-                                <a href="{{url('admins/customers/manage_customer')}}/{{$customer->id}}" class="btn btn-primary"> <i class="fas fa-edit"></i> Edit</a>
+                                <a href="#" data-toggle="modal"  data-target="#exampleModal" urldata="{{url('admins/customers/manage_customer')}}/{{$customer->id}}" class="btn btn-primary edit-customer"> <i class="fas fa-edit"></i> Edit</a>
                                 <a href="{{url('admins/customers/delete_customer/')}}/{{$customer->id}}" class="btn btn-danger"> <i class="fas fa-trash"></i> delete</a>
                         </td>
                     </tr>   
@@ -92,4 +92,70 @@
   <!-- /.content-wrapper -->
 
 
+@endsection
+@section('script')
+<script>
+  $(document).ready(function(){
+    $('#newCustomer').click(function(){
+      x=$(this).attr('urldata')
+      $.ajax({
+        url:x,
+        success:function(data){
+          $('.modal-content').html(data);
+        }
+      })
+    
+    });
+    $('.edit-customer').click(function(){
+      x=$(this).attr('urldata')
+     
+      $.ajax({
+        url:x,
+        success:function(data){
+          $('.modal-content').html(data);
+        }
+      })
+    
+    });
+    $(document).on('click','#submit',function(){
+     
+         
+        var form = $('#model-form');
+       
+        var url = form.attr('action');
+       $('#model-form .is-invalid').removeClass('is-invalid');
+        $('#model-form .invalid-feedback').remove();
+
+        $.ajax({
+              type: "POST",
+              url: url,
+              data: form.serialize(), // serializes the form's elements.
+              success: function(data)
+              {
+                 $('#exampleModal').fadeOut();
+                 window.location.href="{{url('admins/customer-bill')}}"
+              },
+              error: function(data)
+              {
+                var errors=data.responseJSON.errors
+                
+                for( var x in errors){
+                  
+                  $('#'+x).addClass('is-invalid');
+                  sp="<span class='invalid-feedback'>"+errors[x]+"</span>"
+                  $('#'+x).after(sp);
+                }
+              }
+            });
+
+
+        });
+        
+      
+   
+  })
+  
+
+ 
+</script>
 @endsection
