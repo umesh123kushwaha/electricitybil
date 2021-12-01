@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\CustomerBill;
+use App\Models\City_Bill_rate;
+use App\Models\City;
 use App\Models\Customer;
 
 class CustomerBillController extends Controller
@@ -12,6 +14,7 @@ class CustomerBillController extends Controller
     public function index(Request $request)
     {
         $result['customer_bill']=CustomerBill::paginate(5);
+        $result['city_bill_rate']=City::paginate(5);
        
         // echo $result->customer->customer_name ;
        
@@ -25,12 +28,17 @@ class CustomerBillController extends Controller
             $userbill['customer_id']=$result->customer_id;
             $userbill['total_unit']=$result->total_unit;
             $userbill['month_name']=$result->month_name;
+            $userbill['city_name']=$result->customer->city->city_name;
+            $userbill['city_id']=$result->customer->city->id;
+           
         }
         else{
             $userbill['id']='';
             $userbill['customer_id']='';
             $userbill['total_unit']='';
             $userbill['month_name']='';
+            $userbill['city_name']='';
+            $userbill['city_id']='';
         }
         $customer=Customer::all();
         $userbill['customer']=$customer;
@@ -58,24 +66,63 @@ class CustomerBillController extends Controller
         ]);
         $unit=$request->post('total_unit');
         $total_amount=0;
+        $rateslabs=[];
+        $city_id=$request->post('city_id');
+        $city_rates=City_Bill_rate::where('city_id',$city_id)->get();
+        if(count($city_rates)==0){
+          
+            $city_rates=
+           [
+                
+                [
+                    'from'=>1,
+                    'to'=>50,
+                    'rates'=>5
+                ],
+                [
+                    'from'=>51,
+                    'to'=>100,
+                    'rates'=>8
+                ],
+                [
+                    'from'=>101,
+                    'to'=>250,
+                    'rates'=>12
+                ],
+                [
+                    'from'=>251,
+                    'to'=>NULL,
+                    'rates'=>15
+                ]
+
+            ];
+          
+        }
+       
+    //    return $city_rates;
+      
+
         for($i=1;$i<=$unit;$i++)
         {
-            if($i<=50)
-             $total_amount=$total_amount+5;
-            else if($i>50&&$i<=100)
+            foreach($city_rates as $rate)
             {
-                $total_amount=$total_amount+8;
+                if($rate["to"]==null){
+                    if ($i>=$rate['from'])
+                     $total_amount=$total_amount+$rate['rates'];
+                   
+
+                }
+                else{
+                    if($i>=$rate['from']&&$i<=$rate['to']){
+                        
+                        $total_amount=$total_amount+$rate['rates'];
+                     
+                    }
+                }
             }
-            
-            else if($i>100&&$i<=250)
-            {
-                $total_amount=$total_amount+12;
-            }
-            else
-            {
-                $total_amount=$total_amount+15;
-            }
+           
         }
+      
         $model->customer_id=$request->post('customer_id');
         $model->month_name=$request->post('month');
         $model->total_unit=$unit;

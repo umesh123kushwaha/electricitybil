@@ -61,7 +61,7 @@
                             <td>{{$customer->id}}</td>
                             <td>{{$customer->customer_name}}</td>
                             <td>{{$customer->customer_email}}</td>
-                            <td>{{$customer->customer_city}}</td>
+                            <td>{{$customer->city->city_name}}</td>
                             <td>{{$customer->customer_mobno}}</td>
                             <td>
                                 <a href="#" data-toggle="modal"  data-target="#exampleModal" urldata="{{url('admins/customers/manage_customer')}}/{{$customer->id}}" class="btn btn-primary edit-customer"> <i class="fas fa-edit"></i> Edit</a>

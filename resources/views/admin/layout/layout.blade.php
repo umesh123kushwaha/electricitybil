@@ -12,6 +12,8 @@
   <!-- jsGrid -->
     <!-- Theme style -->
   <link rel="stylesheet" href="{{asset('admin')}}/css/adminlte.min.css">
+  <!-- jQuery -->
+<script src="{{asset('admin')}}/js/jquery.min.js"></script>
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -22,7 +24,7 @@
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      
+
     </div>
   </div>
 </div>

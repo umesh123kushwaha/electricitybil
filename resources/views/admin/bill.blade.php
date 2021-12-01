@@ -33,65 +33,157 @@
           {{session('error')}}
         </div>
       @endif
-      <div class="card">
-        
+      <div class="card card-success">
+         
         <div class="card-header">
-        <div class="card-tools float-left ">
-            <div class="input-group input-group-sm " style="width: 200px;">
-            <input type="text" name="table_search" class="form-control " placeholder="Search">
-
-            <div class="input-group-append">
-                <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
-            </div>
-            </div>
-        </div>
-         <div class="card-tools">
-
-         <a href="#" data-toggle="modal" id="addnewbill" data-target="#exampleModal" urldata="{{url('admins/customer-bills/new-bill')}}"class="btn btn-primary  ml-0 mr-auto">Create New Bill</a>
-
-         </div>
+        <h3 class="card-title">Customers Bill Table</h3>
+          <div class="card-tools">
+             
+              <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                <i class="fas fa-minus"></i>
+              </button><button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                <i class="fas fa-times"></i>
+              </button>
+          </div>
          
         </div>
         <!-- /.card-header -->
-        <div class="card-body table-responsive p-0" >
-            <table class="table table-head-fixed text-nowrap text-center table-bordered">
-                <thead class="  "  >
-                <tr class=" "style="" >
-                    <th>ID</th>
-                    <th>Customer Name</th>
-                    <th>Cunsume Unit</th>
-                    <th>Total Amount</th>
-                    <th>Month</th>
-                    
-                   
-                    
-                    <th>Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                  @foreach($customer_bill as $bill)
-                    @if($bill->customer=='')
-                     @continue;
-                    @endif
-                      <tr>
-                        <td>{{$bill->id}}</td>
-                        <td>{{$bill->customer->customer_name}}</td>
-                        <td>{{$bill->total_unit}}</td>
-                        <td>{{$bill->total_amount}}</td>
-                        <td>{{$bill->month_name}}</td>
-                        <td> 
-                          <a href="#" data-toggle="modal"  data-target="#exampleModal" urldata="{{url('admins/customer-bill/edit-bill')}}/{{$bill->id}}"  class="btn btn-success editbill"><i class="fas fa-edit"> Edit</i></a>
-                          <a href="{{url('admins/customer-bills/delete-bill')}}/{{$bill->id}}" class="btn btn-danger"><i class="fas fa-trash"> Delete</i></a>
-                        </td>
+            <div class="card-body table-responsive p-0" >
+              <div class="card-header">
+              <div class="card-tools float-left ">
+                  <div class="input-group input-group-sm " style="width: 200px;">
+                      <input type="text" name="table_search" class="form-control " placeholder="Search">
 
-                      </tr>
-                  @endforeach
-                </tbody>
-            </table>
-            <div class=" ml-auto p-2">
-            {{$customer_bill->links()}}
+                      <div class="input-group-append">
+                          <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                      </div>
+                  </div>
+              </div>
+              <div class="card-tools">
 
+                  <a href="#" data-toggle="modal" id="addnewbill" data-target="#exampleModal" urldata="{{url('admins/customer-bills/new-bill')}}"class="btn btn-primary  ml-0 mr-auto">Create New Bill</a>
+
+              </div>
+              </div>
+              <div class="card-body">
+                <table class="table table-head-fixed text-nowrap text-center table-bordered">
+                    <thead class="  "  >
+                    <tr class=" "style="" >
+                        <th>ID</th>
+                        <th>Customer Name</th>
+                        <th>Cunsume Unit</th>
+                        <th>Total Amount</th>
+                        <th>Month</th>
+                        
+                      
+                        
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                      @foreach($customer_bill as $bill)
+                        @if($bill->customer=='')
+                        @continue;
+                        @endif
+                          <tr>
+                            <td>{{$bill->id}}</td>
+                            <td>{{$bill->customer->customer_name}}</td>
+                            <td>{{$bill->total_unit}}</td>
+                            <td>{{$bill->total_amount}}</td>
+                            <td>{{$bill->month_name}}</td>
+                            <td> 
+                              <a href="#" data-toggle="modal"  data-target="#exampleModal" urldata="{{url('admins/customer-bill/edit-bill')}}/{{$bill->id}}"  class="btn btn-success editbill"><i class="fas fa-edit"> Edit</i></a>
+                              <a href="{{url('admins/customer-bills/delete-bill')}}/{{$bill->id}}" class="btn btn-danger"><i class="fas fa-trash"> Delete</i></a>
+                            </td>
+
+                          </tr>
+                      @endforeach
+                    </tbody>
+                </table>
+                <div class=" ml-auto p-2">
+                {{$customer_bill->links()}}
+
+                </div>
+              </div>
             </div>
+
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+      <div class="card card-info">
+         
+        <div class="card-header">
+        <h3 class="card-title">City Bill rate</h3>
+          <div class="card-tools">
+             
+              <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                <i class="fas fa-minus"></i>
+              </button><button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                <i class="fas fa-times"></i>
+              </button>
+          </div>
+         
+        </div>
+        <!-- /.card-header -->
+            <div class="card-body table-responsive p-0" >
+              <div class="card-header">
+              <div class="card-tools float-left ">
+                  <div class="input-group input-group-sm " style="width: 200px;">
+                      <input type="text" name="table_search" class="form-control " placeholder="Search">
+
+                      <div class="input-group-append">
+                          <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                      </div>
+                  </div>
+              </div>
+              <div class="card-tools">
+
+                  <a href="#" data-toggle="modal" id="addnewbill" data-target="#exampleModal" urldata="{{url('admins/customer-bills/new-bill')}}"class="btn btn-primary  ml-0 mr-auto">Add new Bill rate in City</a>
+
+              </div>
+              </div>
+              <div class="card-body">
+                <table class="table table-head-fixed text-nowrap text-center table-bordered">
+                    <thead class="  "  >
+                    <tr class=" "style="" >
+                        <th>ID</th>
+                        <th>City Name Name</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Month</th>
+                        
+                      
+                        
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                      @foreach($city_bill_rate as $rate)
+                       
+                       
+                          <tr>
+                            <td>{{$rate->id}}</td>
+                            <td>{{$rate->city_name}}</td>
+                            <td class="text-left">
+                              @foreach($rate->city_bill_rate as $list)
+                                    {{$list->from}} - {{ $list->to}} Units : {{$list->rates}} rs/unit<br>
+                              @endforeach
+                            </td>
+                           
+                            <td> 
+                              <a href="#" data-toggle="modal"  data-target="#exampleModal" urldata="{{url('admins/customer-bill/edit-bill')}}/{{$bill->id}}"  class="btn btn-success editbill"><i class="fas fa-edit"> Edit</i></a>
+                              <a href="{{url('admins/customer-bills/delete-bill')}}/{{$bill->id}}" class="btn btn-danger"><i class="fas fa-trash"> Delete</i></a>
+                            </td>
+
+                          </tr>
+                      @endforeach
+                    </tbody>
+                </table>
+                <div class=" ml-auto p-2">
+                {{$customer_bill->links()}}
+
+                </div>
+              </div>
             </div>
 
         <!-- /.card-body -->
@@ -128,6 +220,13 @@
       })
     
     });
+    $(document).on('change','#customer_id',function(){
+       var  city_id=$('option:selected', this).attr('city_id');
+       var  city_name=$('option:selected', this).attr('city_name');
+      
+       $('#city_name').text("City: "+city_name);
+       $('#city_id').val(city_id);
+    })
     $(document).on('click','#submit',function(){
      
          

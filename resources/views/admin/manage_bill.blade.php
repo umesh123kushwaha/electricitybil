@@ -16,7 +16,7 @@
                             @if($list->id==$customer_id)
                               <option value="{{$list->id}}" selected>{{$list->customer_name}}</option>
                             @else
-                             <option value="{{$list->id}}">{{$list->customer_name}}</option>
+                             <option city_name="{{$list->city->city_name}}" city_id="{{$list->city->id}}" value="{{$list->id}}">{{$list->customer_name}}</option>
                              @endif
 
                        @endforeach
@@ -26,6 +26,8 @@
                     @enderror
 
                 </div>
+                <label for="" id="city_name">City: {{$city_name}}</label>
+                  <input type="hidden" id="city_id" name="city_id" value="{{$city_id}}">
                 <div class="form-group">
                     <label >Total consumed Unit :</label>
                     <input type="number" name="total_unit" id="total_unit" class="form-control @error('total_unit')is-invalid @enderror" placeholder="Enter Consumed Unit" value="{{old('total_unit',$total_unit)}}">
@@ -52,5 +54,7 @@
 
 
             </form>
+           
             @endsection
+          
       

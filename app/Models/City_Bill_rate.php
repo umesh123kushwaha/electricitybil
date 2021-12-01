@@ -5,15 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Customer extends Model
+class City_Bill_rate extends Model
 {
     use HasFactory;
-    public function customerbill()
-    {
-        return $this->hasOne(CustomerBill::class);
-    }
-    public function city()
-    {
+    public function city(){
         return $this->belongsTo(City::class);
     }
 }
