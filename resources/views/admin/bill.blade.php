@@ -61,7 +61,7 @@
               </div>
               <div class="card-tools">
 
-                  <a href="#" data-toggle="modal" id="addnewbill" data-target="#exampleModal" urldata="{{url('admins/customer-bills/new-bill')}}"class="btn btn-primary  ml-0 mr-auto">Create New Bill</a>
+                  <a href="#" data-toggle="modal" id="addnewbill" data-target="#exampleModal" urldata="{{url('admins/customer-bills/new-bill')}}"class="btn btn-primary manage-content ml-0 mr-auto">Create New Bill</a>
 
               </div>
               </div>
@@ -92,7 +92,7 @@
                             <td>{{$bill->total_amount}}</td>
                             <td>{{$bill->month_name}}</td>
                             <td> 
-                              <a href="#" data-toggle="modal"  data-target="#exampleModal" urldata="{{url('admins/customer-bill/edit-bill')}}/{{$bill->id}}"  class="btn btn-success editbill"><i class="fas fa-edit"> Edit</i></a>
+                              <a href="#" data-toggle="modal"  data-target="#exampleModal" urldata="{{url('admins/customer-bill/edit-bill')}}/{{$bill->id}}"  class="btn btn-success manage-content editbill"><i class="fas fa-edit"> Edit</i></a>
                               <a href="{{url('admins/customer-bills/delete-bill')}}/{{$bill->id}}" class="btn btn-danger"><i class="fas fa-trash"> Delete</i></a>
                             </td>
 
@@ -138,7 +138,7 @@
               </div>
               <div class="card-tools">
 
-                  <a href="#" data-toggle="modal" id="addnewbill" data-target="#exampleModal" urldata="{{url('admins/customer-bills/new-bill')}}"class="btn btn-primary  ml-0 mr-auto">Add new Bill rate in City</a>
+                  <a href="#" data-toggle="modal"  data-target="#exampleModal" urldata="{{url('admins/customer-bills/new-city-bill-rate')}}"class="btn btn-primary manage-content  ml-0 mr-auto">Add new Bill rate in City</a>
 
               </div>
               </div>
@@ -148,9 +148,8 @@
                     <tr class=" "style="" >
                         <th>ID</th>
                         <th>City Name Name</th>
-                        <th>From</th>
-                        <th>To</th>
-                        <th>Month</th>
+                        <th>Rate Slabs</th>
+                       
                         
                       
                         
@@ -160,27 +159,37 @@
                     <tbody>
                       @foreach($city_bill_rate as $rate)
                        
+                      @if(count($rate->city_bill_rate)>0)
+                        
+                       
+                      
+                      
                        
                           <tr>
                             <td>{{$rate->id}}</td>
                             <td>{{$rate->city_name}}</td>
                             <td class="text-left">
                               @foreach($rate->city_bill_rate as $list)
+                                    @if($list->to!=null)
                                     {{$list->from}} - {{ $list->to}} Units : {{$list->rates}} rs/unit<br>
+                                    @else
+                                    {{$list->from}} - Unlimited : {{$list->rates}} rs/unit<br>
+                                    @endif
                               @endforeach
                             </td>
                            
                             <td> 
-                              <a href="#" data-toggle="modal"  data-target="#exampleModal" urldata="{{url('admins/customer-bill/edit-bill')}}/{{$bill->id}}"  class="btn btn-success editbill"><i class="fas fa-edit"> Edit</i></a>
-                              <a href="{{url('admins/customer-bills/delete-bill')}}/{{$bill->id}}" class="btn btn-danger"><i class="fas fa-trash"> Delete</i></a>
+                              <a href="#" data-toggle="modal"  data-target="#exampleModal" urldata="{{url('admins/customer-bills/edit-city-bill-rate')}}/{{$rate->id}}"  class="btn btn-success editbill"><i class="fas fa-edit"> Edit</i></a>
+                              <a href="{{url('admins/customer-bills/delete-city-bill-rate')}}/{{$rate->id}}" class="btn btn-danger"><i class="fas fa-trash"> Delete</i></a>
                             </td>
 
                           </tr>
+                          @endif
                       @endforeach
                     </tbody>
                 </table>
                 <div class=" ml-auto p-2">
-                {{$customer_bill->links()}}
+               
 
                 </div>
               </div>
@@ -199,7 +208,7 @@
 @section('script')
 <script>
   $(document).ready(function(){
-    $('#addnewbill').click(function(){
+    $('.manage-content').click(function(){
       x=$(this).attr('urldata')
       $.ajax({
         url:x,

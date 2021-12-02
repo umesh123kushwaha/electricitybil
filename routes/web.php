@@ -5,6 +5,7 @@ use App\Http\Controllers\PagesController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CustomerContrller;
 use App\Http\Controllers\CustomerBillController;
+use App\Http\Controllers\CityBillRateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +33,8 @@ Route::group(['middleware'=>'user_auth'],function(){
     Route::post('/admins/customer-bill/save_customer_bill',[CustomerBillController::class,'save_customer_bill'])->name('customer_bill.save_customer_bill');
     Route::get('/admins/customer-bill',[CustomerBillController::class,'index']);
     Route::get('admins/customer-bills/new-bill',[CustomerBillController::class,'manage_bill']);
+    Route::get('admins/customer-bills/new-city-bill-rate',[CityBillRateController::class,'manage_city_bill_rate']);
+    Route::get('admins/customer-bills/edit-city-bill-rate/{city_id}',[CityBillRateController::class,'manage_city_bill_rate']);
     Route::get('admins/customer-bill/edit-bill/{id}',[CustomerBillController::class,'manage_bill']);
     Route:: get('admins/customer-bills/delete-bill/{id}',[CustomerBillController::class,'delete_bill']);
 
