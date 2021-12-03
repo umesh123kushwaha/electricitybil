@@ -65,11 +65,14 @@ class CustomerBillController extends Controller
             'month'=>'required'
         ]);
         $unit=$request->post('total_unit');
+        $remain_unit=$unit;
         $total_amount=0;
         $rateslabs=[];
         $city_id=$request->post('city_id');
-        $city_rates=City_Bill_rate::where('city_id',$city_id)->get();
-        if(count($city_rates)==0){
+        $city_rates=City_Bill_rate::where('city_id',$city_id)->orderBy('from')->get();
+        $count=count($city_rates);
+        $x=0;
+        if($count==0){
           
             $city_rates=
            [
@@ -98,30 +101,40 @@ class CustomerBillController extends Controller
             ];
           
         }
-       
-    //    return $city_rates;
-      
-
-        for($i=1;$i<=$unit;$i++)
-        {
             foreach($city_rates as $rate)
             {
-                if($rate["to"]==null){
-                    if ($i>=$rate['from'])
-                     $total_amount=$total_amount+$rate['rates'];
-                   
+                
+                if($rate["to"]==null)
+                {
 
-                }
-                else{
-                    if($i>=$rate['from']&&$i<=$rate['to']){
-                        
-                        $total_amount=$total_amount+$rate['rates'];
-                     
+                    if ($unit>=$rate['from'])
+                    {
+                        $total_amount=$total_amount+$remain_unit*$rate['rates'];
+
                     }
                 }
+                 else
+                { 
+                    if ($unit>=$rate['from']&&$unit<=$rate['to'])
+                    {
+                         if($remain_unit<=$rate['to'])
+                         {
+                            $total_amount=$total_amount+$remain_unit*$rate['rates'];
+                         }
+                         break;
+                    }
+                    else
+                    {
+                        $unit_count=($rate['to']+1)-$rate['from'];
+                        $total_amount=$total_amount+$unit_count*$rate['rates'];
+                        $remain_unit=$unit-$rate['to'];
+
+                    }
+                 }
             }
+          
            
-        }
+        
       
         $model->customer_id=$request->post('customer_id');
         $model->month_name=$request->post('month');

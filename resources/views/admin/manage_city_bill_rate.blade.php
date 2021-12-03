@@ -77,8 +77,8 @@
             </form>
             <script>
               $(document).ready(function(){
-                
-                $(document).on('change','#checkbtn',function(event){
+                 var rownum=1
+                $(document).on('change','#checkbtn'+rownum+',function(event){
                   if($(this).prop('checked')==true)
                     $('#till_unit').prop('disabled',true)
                   else
@@ -92,7 +92,7 @@
                   <div class="col-4">
                       <div class="form-group">
                         <label >From Unit</label>
-                        <input type="number" name="from_unit" class="form-control @error('from_unit')is-invalid @enderror " id="from_unit" placeholder="Enter Begining Unit">
+                        <input type="number" name="from_unit" class="form-control @error('from_unit')is-invalid @enderror " id="from_unit`+rownum+`" placeholder="Enter Begining Unit">
                         @error('from_unit')
                           <p class="invalid-feedback">{{$message}}</p>
                           @enderror
@@ -105,7 +105,7 @@
                       <div class="form-check">
                         
                       <label class="form-check-label">
-                        <input name="checkbtn" id="checkbtn" class="form-check-input" type="checkbox">
+                        <input name="checkbtn" id="checkbtn`+rownum+`" class="form-check-input" type="checkbox">
                         this is Max Unit</label>
                       </div>
                     </div>
@@ -114,7 +114,7 @@
                   <div class="col-4">
                     <div class="form-group">
                       <label >Till Unit</label>
-                      <input type="number" name="to_unit" class="form-control @error('from_unit')is-invalid @enderror " id="till_unit" placeholder="Enter till Unit" >
+                      <input type="number" name="to_unit" class="form-control @error('from_unit')is-invalid @enderror " id="till_unit`+rownum+`" placeholder="Enter till Unit" >
                       @error('from_unit')
                         <p class="invalid-feedback">{{$message}}</p>
                         @enderror
