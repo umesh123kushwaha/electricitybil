@@ -35,6 +35,7 @@ Route::group(['middleware'=>'user_auth'],function(){
     Route::get('admins/customer-bills/new-bill',[CustomerBillController::class,'manage_bill']);
     Route::get('admins/customer-bills/new-city-bill-rate',[CityBillRateController::class,'manage_city_bill_rate']);
     Route::get('admins/customer-bills/edit-city-bill-rate/{city_id}',[CityBillRateController::class,'manage_city_bill_rate']);
+    Route::post('admins/customer-bills/save_city_bill_rate',[CityBillRateController::class,'save_city_bill_rate'])->name('city_bill_rate.save_city_bill_rate');
     Route::get('admins/customer-bill/edit-bill/{id}',[CustomerBillController::class,'manage_bill']);
     Route:: get('admins/customer-bills/delete-bill/{id}',[CustomerBillController::class,'delete_bill']);
 

@@ -8,10 +8,10 @@ use App\Models\City;
 class CityBillRateController extends Controller
 {
     //
-    public function manage_city_bill_rate(Request $request,$city_id='')
+    public function manage_city_bill_rate(Request $request)
     {
         # code...
-        $data['cities']=City::all()->get();
+        $data['cities']=City::all();;
         $data['city_id']='';
         return view('admin.manage_city_bill_rate',$data);
     }

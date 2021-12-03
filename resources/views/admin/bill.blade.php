@@ -209,6 +209,7 @@
 <script>
   $(document).ready(function(){
     $('.manage-content').click(function(){
+      $('.modal-content').html(" ");
       x=$(this).attr('urldata')
       $.ajax({
         url:x,
