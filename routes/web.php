@@ -6,6 +6,10 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CustomerContrller;
 use App\Http\Controllers\CustomerBillController;
 use App\Http\Controllers\CityBillRateController;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\TestMail;
+use App\Mail\MarkdownMail;
+use App\Jobs\TestMailJob;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +24,18 @@ use App\Http\Controllers\CityBillRateController;
 
 Route::get('/', function () {
     return view('login');
+});
+Route::get('/mail',function(){
+    
+    Mail::to("umesh@gmail.com")->send(new MarkdownMail());
+    echo "Mail Sent .";
+
+});
+Route::get('/queue',function(){
+    dispatch(new TestMailJob())->delay(now()->addSeconds(5));
+    echo "Mail Sent .";
+            
+
 });
 
 Route::post('/admins/validateLogin',[AdminController::Class,'validateLogin'])->name('admins.validateLogin');
